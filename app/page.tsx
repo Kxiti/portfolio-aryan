@@ -15,7 +15,6 @@ export default function HomePage() {
     <PageFrame className="home-page">
       <section className="home-hero">
         <div className="hero-grid" aria-hidden="true" />
-        <div className="hero-pixel hero-pixel-b" aria-hidden="true"><i /><i /><i /><i /><i /><i /><i /><i /></div>
         <div className="hero-content">
           <Eyebrow light>FINAL-YEAR CS STUDENT · LNMIIT, JAIPUR</Eyebrow>
           <p className="hero-greeting">Hi, I&apos;m</p>
