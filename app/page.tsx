@@ -30,7 +30,7 @@ export default function HomePage() {
       </section>
 
       <section className="home-intro section-pad">
-        <div className="home-intro-label"><Eyebrow>THE QUESTION</Eyebrow><span className="intro-stamp">HCI<br />×<br />HUMAN</span></div>
+        <div className="home-intro-label"><Eyebrow>THE QUESTION</Eyebrow></div>
         <div className="home-intro-copy"><h2>What does an interface make us <em>feel, notice,</em> and choose?</h2><p>I&apos;m a final-year Computer Science student at LNMIIT, Jaipur. My work sits at the intersection of human-computer interaction, behavioural research and the systems we build around people.</p><ArrowLink href="/about">More about my approach</ArrowLink></div>
       </section>
 
