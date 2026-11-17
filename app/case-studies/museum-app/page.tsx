@@ -1,37 +1,222 @@
 import Image from 'next/image'
-import { ArrowLink, Eyebrow, PageFrame, SectionIntro } from '../../components/site'
-import { MuseumStoryline } from './museum-storyline'
+import type { Metadata } from 'next'
+import { ArrowRight, Compass, Eye, HeartHandshake, TicketCheck } from 'lucide-react'
+import { Eyebrow, PageFrame, SectionIntro } from '../../components/site'
+import {
+  MuseumEmpathyMaps,
+  MuseumIterationBoard,
+  MuseumJourneyMap,
+  MuseumPersonas,
+  MuseumResearchBoard,
+  MuseumSources,
+  MuseumWireframeFlow,
+} from './museum-research'
+import { MuseumPrototype } from './museum-prototype'
+import { MuseumQuickNav, MuseumSectionPager } from './museum-navigation'
 
-const visitorCards = [
-  { name: 'Maya', age: '36 · working parent of two', need: 'Compare a family-of-four total, visit length and hands-on level before a late decision.', design: 'Put plain-language family pricing and exhibit suitability up front; browse and book without an account.', mark: '01' },
-  { name: 'Devon', age: '27 · spontaneous visitor', need: 'Know what is actually running this weekend without cross-checking several sources.', design: 'A guest-first What’s On view with clear run dates, interest filters and walk-in options.', mark: '02' },
-  { name: 'Renata', age: '58 · retired teacher who uses a cane', need: 'Settle the access question with information that is specific and visibly current.', design: 'Show practical access details with a checked date; clearly flag anything unverified or changed.', mark: '03' },
+export const metadata: Metadata = {
+  title: 'Public Museum App UX Case Study — Aryan Jadhav',
+  description: 'A research-led museum app case study focused on decision-ready exhibit details, transparent family pricing and verified accessibility information.',
+  openGraph: {
+    title: 'Public Museum App UX Case Study — Aryan Jadhav',
+    description: 'From scattered exhibit details to a clearer, more accessible museum visit decision.',
+    type: 'article',
+  },
+}
+
+const caseSections = [
+  { id: 'museum-problem', label: 'Problem & overview' },
+  { id: 'museum-discovery', label: 'Problem discovery' },
+  { id: 'museum-research', label: 'Research' },
+  { id: 'museum-personas', label: 'Personas' },
+  { id: 'museum-empathy', label: 'Empathy maps' },
+  { id: 'museum-journey', label: 'Journey maps' },
+  { id: 'museum-wireframes', label: 'Wireframes' },
+  { id: 'museum-iterations', label: 'Iterations' },
+  { id: 'museum-solution', label: 'Final solution' },
+  { id: 'museum-next-steps', label: 'Next steps' },
+  { id: 'museum-sources', label: 'Sources' },
 ]
 
-const screens = [
-  { title: '01 / Browse', note: 'Guest-first “What’s On” list; now, weekend and free filters.', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-eQyrqWuOwnsW5mGLqa8DUqyvefi7Fk.png', alt: 'Three iPhone wireframe variants for a museum What’s On listing screen, each with event cards and different filter states.' },
-  { title: '02 / Decide & book', note: 'The journey through party size, date, confirmation and booking details.', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-JRdIP0oGIpekY1fZ3utiseIWKL7Irx.png', alt: 'A Figma board of iPhone wireframes showing a museum exhibit detail page, ticket party selection, date picker, booking confirmation and access information.' },
-  { title: '03 / Handle a dead end', note: 'An availability interruption that explains the constraint and offers a next step.', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ffLUWc6FBcs779YR17aSzdmDzYJvxr.png', alt: 'A museum app wireframe with an availability alert over a blurred What’s On screen, explaining that only one exhibit can be booked at that moment.' },
-]
+function SectionPager({ index }: { index: number }) {
+  return (
+    <MuseumSectionPager
+      position={String(index + 1).padStart(2, '0')}
+      total={String(caseSections.length).padStart(2, '0')}
+      previous={caseSections[index - 1]}
+      next={caseSections[index + 1]}
+    />
+  )
+}
 
 export default function MuseumCaseStudyPage() {
-  return <PageFrame className="case-page museum-page">
-    <section className="case-hero museum-hero"><div className="case-hero-top"><Eyebrow>CASE STUDY / 02</Eyebrow><span className="case-type-pill">CONCEPT PROJECT</span></div><div className="museum-hero-content"><div className="museum-hero-copy"><p className="case-overline">GOOGLE UX DESIGN CERTIFICATE · SOLO PROJECT</p><h1>The decision<br />to visit, <em>at a glance.</em></h1><p className="case-dek">Most museum apps list exhibits and sell tickets. But whether someone goes depends on things those apps bury: what the whole family will pay, how long it takes, whether the kids can touch anything, and whether the building works for someone with a cane.</p><div className="case-meta-row"><span>ROLE <b>Research · UX · UI</b></span><span>PLATFORM <b>iPhone app · 13 screens</b></span><span>METHOD <b>Secondary research + simulated interviews</b></span><span>TOOLS <b>Figma</b></span></div></div><div className="museum-hero-art" aria-hidden="true"><div className="museum-phone"><span className="phone-top">9:41 <i /></span><span className="phone-greeting">What’s On</span><span className="phone-filters"><i>now</i><i>weekend</i><i>free</i></span><span className="phone-card"><i /><b>Bodies of Water</b><small>75 min · touch · ends 9 Nov</small></span><span className="phone-card"><i /><b>Print Lab</b><small>60 min · touch · Sat only</small></span></div><span className="museum-sticker">VISIT<br />WITH<br />CONFIDENCE</span></div></div></section>
+  return (
+    <PageFrame className="case-page museum-page museum-case-study">
+      <section className="museum-case-hero" id="museum-problem" aria-labelledby="museum-case-title">
+        <div className="museum-hero-grid" aria-hidden="true" />
+        <div className="museum-hero-top">
+          <Eyebrow light>CASE STUDY / 02 · PUBLIC MUSEUM APP</Eyebrow>
+          <span className="museum-case-tag">CONCEPT PROJECT <i /> SOLO DESIGN</span>
+        </div>
+        <div className="museum-hero-layout">
+          <div className="museum-hero-copy">
+            <p className="museum-overline">GOOGLE UX DESIGN CERTIFICATE · UX RESEARCH + PRODUCT DESIGN</p>
+            <h1 id="museum-case-title">A visit should be<br /><em>easy to say yes to.</em></h1>
+            <div className="museum-problem-statement">
+              <span>THE PROBLEM STATEMENT</span>
+              <p>Maya is a busy working parent who needs an exhibit&rsquo;s family cost, duration and kid-suitability at a glance, because unclear pricing and vague age guidance can make her abandon a visit she wants to take.</p>
+              <small>PRIMARY DESIGN CHALLENGE · PERSONA-BASED PROJECT STATEMENT</small>
+            </div>
+            <div className="museum-hero-overview">
+              <span className="museum-small-label">PROJECT OVERVIEW</span>
+              <p>Design a guest-first museum app that helps visitors decide what to see, what it will cost, and whether the visit will work for their group before they book.</p>
+              <div className="museum-overview-facts">
+                <div><span>ROLE</span><b>Research · UX · UI</b></div>
+                <div><span>PLATFORM</span><b>iPhone prototype · 13 screens</b></div>
+                <div><span>METHOD</span><b>Secondary research + persona roleplay</b></div>
+                <div><span>TOOL</span><b>Figma</b></div>
+              </div>
+            </div>
+          </div>
+          <div className="museum-hero-art" aria-label="Preview of the museum app on an iPhone">
+            <div className="museum-hero-art-note"><span>01 — 13</span><b>DECISION-READY<br />BY DESIGN</b></div>
+            <figure className="museum-hero-device">
+              <div className="museum-hero-device-screen">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iPhone%2017%20-%201-zTaYxcrXaHayJOEXqwo83DAFNrEYua.png"
+                  alt="Museum app What’s On screen with current exhibitions, prices and visit details."
+                  width={402}
+                  height={874}
+                  unoptimized
+                  priority
+                />
+                <span className="museum-hero-dynamic-island" aria-hidden="true" />
+              </div>
+            </figure>
+            <span className="museum-hero-sticker">NO<br />ACCOUNT<br />NEEDED</span>
+          </div>
+        </div>
+        <MuseumQuickNav sections={caseSections} />
+        <SectionPager index={0} />
+      </section>
 
-    <section className="case-section section-pad"><SectionIntro index="01" kicker="THE PROBLEM" title="The catalogue isn’t the decision." /><div className="case-prose"><p>Most museum apps list exhibits and sell tickets. But visitors need to know whether the trip fits their family, their time and their access needs—before they commit.</p><p>I designed a museum app around that decision instead of around the catalogue. The experience puts the practical details first: total party cost, visit length, hands-on suitability and accessible route information.</p></div><div className="museum-principles"><div><span>01</span><b>What will it cost?</b></div><div><span>02</span><b>How long will it take?</b></div><div><span>03</span><b>Will it work for us?</b></div></div></section>
+      <div className="museum-case-study-content">
+        <section className="section-pad museum-discovery-section" id="museum-discovery" aria-label="Problem discovery">
+          <SectionIntro index="01" kicker="PROBLEM DISCOVERY" title="The decision happens before the visit." />
+          <p className="museum-section-lede">A museum can have great exhibitions and still lose a visitor before they leave home. The project brief surfaced three separate questions hidden inside one simple decision: “Should we go?”</p>
+          <div className="museum-discovery-grid">
+            <article className="museum-discovery-card">
+              <span className="museum-discovery-icon"><Compass size={21} aria-hidden="true" /></span>
+              <span className="museum-small-label">DISCOVER · DEVON</span>
+              <h3>What&rsquo;s actually on?</h3>
+              <p>Current exhibits and end dates are spread across social posts, museum sites and third-party listings.</p>
+              <b>Make “now” easy to trust.</b>
+            </article>
+            <article className="museum-discovery-card">
+              <span className="museum-discovery-icon"><TicketCheck size={21} aria-hidden="true" /></span>
+              <span className="museum-small-label">DECIDE · MAYA</span>
+              <h3>Will it fit our group?</h3>
+              <p>Family cost, expected duration and whether an exhibit is hands-on are hard to compare at a glance.</p>
+              <b>Make the visit legible before checkout.</b>
+            </article>
+            <article className="museum-discovery-card">
+              <span className="museum-discovery-icon"><HeartHandshake size={21} aria-hidden="true" /></span>
+              <span className="museum-small-label">VERIFY · RENATA</span>
+              <h3>Can I rely on the access details?</h3>
+              <p>Vague or undated accessibility information can force a visitor to call before planning anything else.</p>
+              <b>Show specifics, dates and disruptions.</b>
+            </article>
+          </div>
+          <div className="museum-discovery-summary">
+            <span>THE DESIGN OPPORTUNITY</span>
+            <p>Bring discovery, suitability, price and verified access into the same decision path—without making an account the price of entry.</p>
+            <ArrowRight size={22} aria-hidden="true" />
+          </div>
+          <SectionPager index={1} />
+        </section>
 
-    <section className="evidence-section section-pad"><SectionIntro index="02" kicker="RESEARCH & EVIDENCE" title="Useful context, with limits." /><div className="evidence-grid"><article><span className="evidence-label">SECONDARY RESEARCH</span><h3>Families are central to museum visits.</h3><p>The American Alliance of Museums’ 2025 survey of nearly 99,000 museum-goers found parents of minor children are the most likely group to visit (44%).</p></article><article><span className="evidence-label">SECONDARY RESEARCH</span><h3>Booking decisions happen late.</h3><p>A 2025 UK family-visitor study by Baker Richards for ALVA found 44% of families book in the final 48 hours, and 41% say family tickets don’t fit their household.</p></article><article className="evidence-caveat"><span className="evidence-label">SIMULATED INTERVIEWS</span><h3>These were not real participants.</h3><p>I wrote interview guides for three personas and ran AI roleplays to stress-test assumptions. I treat what they said as hypotheses, not findings.</p></article></div><p className="source-note">Sources cited in the project brief: AAM 2025 demographics · AAM 2025 social experiences · Museums Association on the ALVA study.</p></section>
+        <section className="section-pad museum-research-section" id="museum-research" aria-label="User research and findings">
+          <SectionIntro index="02" kicker="USER RESEARCH" title="Use the numbers as context. Keep the limits visible." />
+          <MuseumResearchBoard />
+          <div className="museum-research-takeaway">
+            <span>WHAT THE EVIDENCE SUGGESTS</span>
+            <p>Visitors make decisions in different time windows and need more than an exhibit description: they need a useful answer about timing, fit and access.</p>
+          </div>
+          <SectionPager index={2} />
+        </section>
 
-    <section className="persona-section section-pad"><SectionIntro index="03" kicker="PERSONAS & EMPATHY" title="Three visitors. Three different blockers." /><div className="persona-grid">{visitorCards.map((person) => <article className="persona-card" key={person.name}><span className="persona-number">{person.mark}</span><p className="persona-age">{person.age}</p><h3>{person.name}</h3><div className="persona-split"><span>WHAT GETS IN THE WAY</span><p>{person.need}</p></div><div className="persona-split persona-give"><span>WHAT THE APP GIVES THEM</span><p>{person.design}</p></div></article>)}</div><blockquote className="museum-quote">“For visitors like Renata, accessibility isn’t one step in booking; it decides whether booking starts at all.”</blockquote><p className="quote-source">A design insight from the project framing—not a result from real participant research.</p><div className="empathy-map"><div className="empathy-map-heading"><span>EMPATHY MAP / PROJECT ASSUMPTIONS</span><small>Organised from the persona briefs; not interview findings</small></div><div className="empathy-quadrants"><article><span>SEES</span><p>Practical visit details are scattered across listings and FAQs.</p></article><article><span>THINKS ABOUT</span><p>Will the visit fit the family’s budget, time and needs?</p></article><article><span>FEELS / FACES</span><p>Pressure to decide late; uncertainty about whether access information is current.</p></article><article><span>NEEDS TO DO</span><p>Compare options quickly, confirm the details and plan a workable route.</p></article></div></div></section>
+        <section className="section-pad museum-personas-section" id="museum-personas" aria-label="Museum visitor personas">
+          <SectionIntro index="03" kicker="PERSONAS" title="Three visitors. Three different gates to a visit." />
+          <p className="museum-section-lede">These project personas organize the problems the app is designed around. They are design tools—not a claim that every visitor in a group behaves the same way.</p>
+          <MuseumPersonas />
+          <SectionPager index={3} />
+        </section>
 
-    <section className="journey-section section-pad"><SectionIntro index="04" kicker="A VISIT, IN FOUR QUESTIONS" title="From “what’s on?” to a day that works." /><MuseumStoryline /></section>
+        <section className="section-pad museum-empathy-section" id="museum-empathy" aria-label="Illustrated empathy maps">
+          <SectionIntro index="04" kicker="EMPATHY MAPS" title="What sits behind each visitor&rsquo;s question." />
+          <MuseumEmpathyMaps />
+          <SectionPager index={4} />
+        </section>
 
-    <section className="design-decisions section-pad"><SectionIntro index="05" kicker="DESIGN ITERATIONS" title="Put the decision first." /><div className="decision-list"><article><span>01</span><div><h3>What’s On, not sign in</h3><p>Guest mode by default. Now, weekend and free filters; cards show the details needed to decide, including walk-up, timed-entry or book-ahead options.</p></div><span className="decision-arrow">↗</span></article><article><span>02</span><div><h3>Two tiers of exhibit detail</h3><p>Tier 1 gives party total, typical visit length and hands-on level. Tier 2 expands to ages, what’s included and step-free status with a check date.</p></div><span className="decision-arrow">↗</span></article><article><span>03</span><div><h3>Access that is dated and specific</h3><p>Staff-verified rows cover entrance, thresholds, seating, restrooms and parking-to-door. Stale information is visibly aged rather than presented as current.</p></div><span className="decision-arrow">↗</span></article><article><span>04</span><div><h3>Dead ends that still go somewhere</h3><p>Sold-out slots show another option; an inaccessible route can point to a day the lift returns or a staff escort. Unverified details are never shown as confirmed.</p></div><span className="decision-arrow">↗</span></article></div></section>
+        <section className="section-pad museum-journey-section" id="museum-journey" aria-label="User journey map">
+          <SectionIntro index="05" kicker="USER JOURNEY MAP" title="Four moments that shape the visit decision." />
+          <p className="museum-section-lede">The journey map turns the persona challenges into a single design sequence: discover, decide, check access, then book—or recover when the first plan is not possible.</p>
+          <MuseumJourneyMap />
+          <SectionPager index={5} />
+        </section>
 
-    <section className="wireframes-section section-pad"><SectionIntro index="06" kicker="WIREFRAMES & PROTOTYPE" title="A working set of mobile flows." /><p className="wireframe-intro">These are the current working wireframes supplied for the project. The visual language is still in progress; the screens shown here are not presented as final, usability-tested designs.</p><div className="wireframe-gallery">{screens.map((screen) => <figure className="wireframe-figure" key={screen.title}><div className="wireframe-image-wrap"><Image src={screen.image} alt={screen.alt} width={screen.title.startsWith('01') ? 987 : screen.title.startsWith('02') ? 1800 : 256} height={screen.title.startsWith('01') ? 678 : screen.title.startsWith('02') ? 810 : 540} unoptimized /></div><figcaption><b>{screen.title}</b><span>{screen.note}</span></figcaption></figure>)}</div></section>
+        <section className="section-pad museum-wireframes-section" id="museum-wireframes" aria-label="Wireframe flow">
+          <SectionIntro index="06" kicker="WIREFRAMES & FLOW" title="Thirteen screens, organized around four moves." />
+          <p className="museum-section-lede">The low-fidelity structure keeps each screen in service of a decision. The flow also accounts for the moments when the answer is “not this time.”</p>
+          <MuseumWireframeFlow />
+          <SectionPager index={6} />
+        </section>
 
-    <section className="case-section section-pad"><SectionIntro index="07" kicker="MEASURING IT" title="A goal, not a claim." /><div className="case-prose"><p>The goal is to let people see cost, length, suitability and verified access before booking. I would measure this by the share of exhibit views that end in a completed booking.</p><div className="honesty-note"><span>WHAT SIMULATED USERS CAN’T TELL ME</span><p>My usability sessions were simulated too, so I don’t report usability findings here. The next step is testing the access screen with visitors who rely on it—especially whether a check date builds trust or just adds more to read.</p></div></div></section>
+        <section className="section-pad museum-iterations-section" id="museum-iterations" aria-label="Design iterations">
+          <SectionIntro index="07" kicker="DESIGN ITERATIONS" title="Move the useful detail closer to the decision." />
+          <p className="museum-section-lede">The design evolves from broad listings into a visit-ready summary, then makes access status and recovery actions visible instead of burying them in fine print.</p>
+          <MuseumIterationBoard />
+          <SectionPager index={7} />
+        </section>
 
-    <section className="case-next"><div><Eyebrow>KEEP EXPLORING</Eyebrow><h2>Making machine health easier to read.</h2></div><ArrowLink href="/case-studies/predictive-maintenance">Next case study</ArrowLink></section>
-  </PageFrame>
+        <section className="section-pad museum-solution-section" id="museum-solution" aria-label="Final app solution">
+          <SectionIntro index="08" kicker="FINAL SOLUTION · INTERACTIVE SCREEN STORY" title="The interface is the story." />
+          <p className="museum-solution-lede">Explore the supplied app screens in a realistic iPhone frame—from the first “What&rsquo;s On” scan to tickets, access checks and dead-end recovery.</p>
+          <MuseumPrototype />
+          <div className="museum-solution-pillars">
+            <article><span>01 / CLARITY</span><b>Know the cost, time and experience before committing.</b></article>
+            <article><span>02 / TRUST</span><b>Give access details a check date and a current status.</b></article>
+            <article><span>03 / MOMENTUM</span><b>Browse and book as a guest; offer a next step when plans change.</b></article>
+          </div>
+          <SectionPager index={8} />
+        </section>
+
+        <section className="section-pad museum-next-steps-section" id="museum-next-steps" aria-label="Measurement and next steps">
+          <SectionIntro index="09" kicker="MEASUREMENT & NEXT STEPS" title="A hypothesis to test—not a result to claim." />
+          <div className="museum-next-steps-grid">
+            <article className="museum-success-metric">
+              <span className="museum-small-label">PROPOSED SUCCESS MEASURE</span>
+              <p>Share of exhibition views that convert to a completed booking.</p>
+              <small>Goal statement from the project brief · no outcome data collected</small>
+            </article>
+            <article className="museum-validation-note">
+              <span className="museum-small-label">NEXT VALIDATION PASS</span>
+              <p>Test the listing, family summary and access ledger with real visitors—including families and people who rely on access information.</p>
+              <small>Also reconcile the prototype&rsquo;s currency formatting between INR listing screens and the dollar-denominated checkout screens.</small>
+            </article>
+          </div>
+          <div className="museum-research-boundary"><Eye size={18} aria-hidden="true" /><p>The source materials include secondary research, persona briefs and simulated roleplay—not observed usability sessions. No usability success or conversion lift is presented as established fact.</p></div>
+          <SectionPager index={9} />
+        </section>
+
+        <section className="section-pad museum-sources-section" id="museum-sources" aria-label="Secondary research sources used">
+          <SectionIntro index="10" kicker="REFERENCES · SECONDARY RESEARCH" title="Secondary research sources used." />
+          <p className="museum-section-lede">The project&rsquo;s research document lists the sources below. The statistics shown earlier are attributed to the AAM 2025 demographics survey and the Baker Richards / ALVA family-visitor study.</p>
+          <MuseumSources />
+          <div className="museum-sources-footer"><span>END OF CASE STUDY · SOURCE LIBRARY</span></div>
+          <SectionPager index={10} />
+        </section>
+      </div>
+    </PageFrame>
+  )
 }
